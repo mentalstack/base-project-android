@@ -12,8 +12,10 @@ import android.view.inputmethod.InputMethodManager
 import org.jetbrains.anko.runOnUiThread
 
 /**
- * Created by aleksandrovdenis on 03.03.2018.
+ * Call [block] method on UI thread and if activity not destroyed
+ * @param block safety code block
  */
+
 fun AppCompatActivity.safety(block: (AppCompatActivity) -> Unit) {
     if (!isDestroyed) {
         runOnUiThread {
@@ -22,6 +24,11 @@ fun AppCompatActivity.safety(block: (AppCompatActivity) -> Unit) {
         }
     }
 }
+
+/**
+ * Call [block] method on UI thread and if fragment not destroyed
+ * @param block safety code block
+ */
 
 fun Fragment.safety(block: (Fragment) -> Unit) {
     if (!isDetached) {
@@ -34,6 +41,11 @@ fun Fragment.safety(block: (Fragment) -> Unit) {
         }
     }
 }
+
+/**
+ * Call [block] method on UI thread
+ * @param block safety code block
+ */
 
 fun Context.safety(some: () -> Unit) {
     (this as? AppCompatActivity)?.let {
@@ -53,11 +65,22 @@ private fun Context.hideKeyboard(currentFocus: View?) {
     }
 }
 
+/**
+ * Show method without stack save
+ * @param clazz Activity class
+ */
+
 fun AppCompatActivity.showOnce(clazz: Class<*>) {
     val int = Intent(this, clazz)
     int.flags = Intent.FLAG_ACTIVITY_NO_HISTORY
     startActivity(int)
 }
+
+/**
+ * Show Activity with saving in stack
+ * @param clazz Activity class
+ * @param withBegin set true, if need remove previous activities
+ */
 
 fun AppCompatActivity.switchTo(clazz: Class<*>, withBegin: Boolean = false) {
     val int = Intent(this, clazz)
@@ -71,6 +94,9 @@ fun AppCompatActivity.switchTo(clazz: Class<*>, withBegin: Boolean = false) {
     startActivity(int)
 }
 
+/**
+ * root view container
+ */
 fun AppCompatActivity.root(): ViewGroup = findViewById(android.R.id.content)
 
 

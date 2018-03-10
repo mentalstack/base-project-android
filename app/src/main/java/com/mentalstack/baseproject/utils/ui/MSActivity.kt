@@ -19,7 +19,12 @@ open class MSActivity : AppCompatActivity() {
     private var permissionHelper: PermissionHelper? = null
     private var observer: ViewTreeObserver? = null
 
-    fun checkPermissions(perms: Array<String>, answer: (PermState) -> Unit, customMessage: String? = null) {
+    /**
+     *  Permission helper
+     *  @property perms needed permissions
+     *  @property answer callback with result argument - OK, DENIED or NEVER_ASK
+     */
+    fun checkPermissions(perms: Array<String>, answer: (PermState) -> Unit) {
         permissionHelper =
                 PermissionHelper(this)
                         .check(*perms)
@@ -61,6 +66,10 @@ open class MSActivity : AppCompatActivity() {
         onKeyboardChanged(keyboardShowed)
     }
 
+    /**
+     * Keyboard show listener
+     * @property isShown true - keyboard now show
+     */
     open fun onKeyboardChanged(isShown: Boolean) {
         //override me
     }

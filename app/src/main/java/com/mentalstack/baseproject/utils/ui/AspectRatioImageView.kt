@@ -9,15 +9,14 @@ import com.mentalstack.baseproject.R
  * Created by aleksandrovdenis on 03.03.2018.
  */
 
+/**
+ * ImageView with aspect ratio. Use [ratio] argument from set proportion
+ *
+ */
 class AspectRatioImageView : ImageView {
 
-    constructor(context: Context) : super(context)
-    constructor(context: Context, attrs: AttributeSet) : super(context, attrs) {
-        parseAttrs(attrs)
-    }
-
-    constructor(context: Context, attrs: AttributeSet, defStyleAttr: Int) : super(context, attrs, defStyleAttr) {
-        parseAttrs(attrs)
+    @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : super(context, attrs, defStyleAttr) {
+        attrs?.let { parseAttrs(attrs) }
     }
 
     private fun parseAttrs(attrs: AttributeSet) {

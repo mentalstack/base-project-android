@@ -1,15 +1,14 @@
 package com.mentalstack.baseproject
 
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import com.mentalstack.baseproject.utils.ui.add
-import com.mentalstack.baseproject.utils.ui.root
+import com.spiinpiin.spiinpiinandroid.utils.ui.MSActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : MSActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
     }
+
+
 }
