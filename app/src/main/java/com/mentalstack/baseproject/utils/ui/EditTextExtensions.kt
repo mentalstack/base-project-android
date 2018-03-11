@@ -15,6 +15,9 @@ import com.mentalstack.baseproject.utils.nativeData.Regulars
  * Created by aleksandrovdenis on 03.03.2018.
  */
 
+/**
+ * replace visible characters ин dots
+ */
 var EditText.asPassword: Boolean
     get() = inputType == InputType.TYPE_TEXT_VARIATION_PASSWORD
     set(value) {
@@ -28,6 +31,9 @@ var EditText.asPassword: Boolean
             null
     }
 
+/**
+ * Listen focus lose
+ */
 fun EditText.onFocusLoseListener(listener: (View) -> Unit) {
     this.setOnFocusChangeListener { view, hasFocus ->
         if (!hasFocus) {
@@ -45,6 +51,12 @@ fun EditText.setLineColorByID(id: Int) {
     setLineColor(ContextCompat.getColor(context, id))
 }
 
+/**
+ * Update text color from regular expression
+ * @param regular - expression
+ * @param confirmColor - color from positive result
+ * @param rejectColor - color from negative result
+ */
 fun EditText.addCheckFromRegular(regular: Regex, confirmColor: Int, rejectColor: Int) {
     onTextChanged {
         if (regular.matches(it))
@@ -54,6 +66,12 @@ fun EditText.addCheckFromRegular(regular: Regex, confirmColor: Int, rejectColor:
     }
 }
 
+/**
+ * Update text color from regular expression
+ * @param regular - expression
+ * @param confirmColorID - colorID from positive result
+ * @param rejectColorID - colorID from negative result
+ */
 fun EditText.addCheckFromRegularWithID(regular: Regex, confirmColorID: Int, rejectColorID: Int) {
     addCheckFromRegular(regular, context.color(confirmColorID), context.color(rejectColorID))
 }
@@ -66,6 +84,9 @@ fun EditText.addCMailCheck(confirmColor: Int, rejectColor: Int) {
     addCheckFromRegular(Regulars.mail.reg, confirmColor, rejectColor)
 }
 
+/**
+ * listen text updates
+ */
 fun EditText.onTextChanged(callback: (String) -> Unit) {
     addTextChangedListener(object : TextWatcher {
         override fun afterTextChanged(text: Editable?) {
@@ -81,6 +102,19 @@ fun EditText.colorize(resId: Int) {
     setTextColor(ContextCompat.getColor(context, resId))
 }
 
-fun EditText.maxLength(value: Int) {
+/**
+ * set max length of input characters
+ */
+var EditText.maxLength :Int
+set(value) {
     filters = arrayOf(InputFilter.LengthFilter(value))
 }
+get() {
+    filters?.forEach {
+        (it as? InputFilter.LengthFilter)?.let {
+            return it.max
+        }
+    }
+    return 0
+}
+

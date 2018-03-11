@@ -4,10 +4,13 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.support.v4.content.ContextCompat
 import android.view.View
+import org.jetbrains.anko.doAsync
 
 /**
  * Created by aleksandrovdenis on 03.03.2018.
  */
+
+
 var View.visible: Boolean
     get() = visibility == View.VISIBLE
     set(value) {
@@ -26,6 +29,17 @@ var View.gone: Boolean
             View.VISIBLE
     }
 
+/**
+ * [drawFromBitmap] return bitmap from full view
+ */
+fun View.drawFromBitmap(block:(Bitmap?)->Unit){
+    doAsync { block(drawFromBitmap()) }
+}
+
+/**
+ * [drawFromBitmap] return bitmap from full view
+ * warning! very long method, try this async or use [drawFromBitmap](block:(Bitmap?)->Unit)
+ */
 fun View.drawFromBitmap(): Bitmap? {
     measure(View.MeasureSpec.UNSPECIFIED, View.MeasureSpec.UNSPECIFIED)
     val b = Bitmap.createBitmap(measuredWidth, measuredHeight, Bitmap.Config.ARGB_8888)

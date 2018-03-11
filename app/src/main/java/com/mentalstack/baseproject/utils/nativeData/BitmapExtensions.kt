@@ -11,10 +11,14 @@ import java.io.FileOutputStream
 /**
  * Created by aleksandrovdenis on 03.03.2018.
  */
-fun Bitmap.scaleTo(size: Pair<Int, Int>): Bitmap {
-    return Bitmap.createScaledBitmap(this, size.first, size.second, false)
-}
 
+
+fun Bitmap.scaleTo(size: Pair<Int, Int>) = scaleTo( size.first, size.second)
+fun Bitmap.scaleTo(w:Int,h:Int):Bitmap = Bitmap.createScaledBitmap( this, w, h, false)
+
+/**
+ * async converting method
+ */
 fun Bitmap.convertToFile(name: String, scaledSize: Pair<Int, Int>? = null, onSuccess: (File?) -> Unit) {
     doAsync {
         try {
@@ -31,6 +35,9 @@ fun Bitmap.convertToFile(name: String, scaledSize: Pair<Int, Int>? = null, onSuc
     }
 }
 
+/**
+ * async converting method
+ */
 fun Drawable.toBitmap( onSuccess: (Bitmap?) -> Unit) {
     doAsync {
         if(this@toBitmap is BitmapDrawable){

@@ -12,17 +12,20 @@ import java.io.IOException
 fun File.videoDuration() = FileUtils.videoDuration(path)
 
 object FileUtils {
-
-    fun readTextFromAssetsFile(context: Context, fileName: String): String {
+    /**
+     * Read text file, return string
+     * @param context
+     * @param fileName - locale file path
+     */
+    fun readTextFromAssetsFile(context: Context, fileName: String): String? {
         return try {
-            val some = context.assets.open(fileName) ?: return ""
+            val some = context.assets.open(fileName) ?: return null
             val buffer = ByteArray(some.available())
             some.read(buffer)
             some.close()
             String(buffer)
         } catch (ex: IOException) {
-            ex.printStackTrace()
-            ""
+            null
         }
     }
 
@@ -37,16 +40,27 @@ object FileUtils {
         }
     }
 
-    fun checkVideoFromUpload(path: String, maxDuration: Int = Int.MAX_VALUE, maxMbSize: Int = Int.MAX_VALUE): Boolean {
+    /**
+     * Check video size and duration
+     * @param path - string path from video file
+     * @param maxDuration - maximum time in seconds
+     * @param maxMbSize - max size in megabytes
+     */
+    fun checkVideoFromUpload(path: String, maxDuration: Int?=null, maxMbSize: Int?=null): Boolean {
         return try {
             MediaMetadataRetriever().let {
                 it.setDataSource(path)
-                val size = File(path).length() / 1048576
-                if (size <= maxMbSize)
-                    return false
+                maxMbSize?.let { maxSize ->
+                    val size = File(path).length() / 1048576
+                    if (size <= maxSize)
+                        return false
+                }
+               maxDuration?.let { maxLen ->
+                   val duration: Int = it.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION).toInt() / 1000
+                   return duration <= maxLen
+               }
 
-                val duration: Int = it.extractMetadata(MediaMetadataRetriever.METADATA_KEY_DURATION).toInt() / 1000
-                return duration <= maxDuration
+               return true
             }
         } catch (e: Exception) {
             false

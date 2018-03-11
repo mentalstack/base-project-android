@@ -19,7 +19,7 @@ fun Calendar.secondsToThis(): Int {
 }
 
 fun Long.cameraTime(): String = "  ${PATTERNS.camera.format(Date(this))}  "
-fun Int.cameraTime(): String = "  ${PATTERNS.camera.format(Date(this.toLong()))}  "
+fun Int.cameraTime(): String = this.toLong().cameraTime()
 
 fun Calendar.seconds() = timeInMillis.let { it + timeZone.getOffset(it) } / 1000
 
