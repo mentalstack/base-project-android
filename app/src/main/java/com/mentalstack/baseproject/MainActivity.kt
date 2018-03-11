@@ -1,7 +1,7 @@
 package com.mentalstack.baseproject
 
 import android.os.Bundle
-import com.spiinpiin.spiinpiinandroid.utils.ui.MSActivity
+import com.mentalstack.baseproject.utils.ui.MSActivity
 
 class MainActivity : MSActivity() {
 

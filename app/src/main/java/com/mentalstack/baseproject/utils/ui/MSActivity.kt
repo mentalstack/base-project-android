@@ -1,13 +1,10 @@
-package com.spiinpiin.spiinpiinandroid.utils.ui
+package com.mentalstack.baseproject.utils.ui
 
 import android.content.pm.ActivityInfo
 import android.graphics.Rect
 import android.os.Bundle
-import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.view.ViewGroup
 import android.view.ViewTreeObserver
-import com.mentalstack.baseproject.utils.ui.root
 import ru.alexbykov.nopermission.PermissionHelper
 
 enum class PermState {
@@ -15,9 +12,16 @@ enum class PermState {
 }
 
 open class MSActivity : AppCompatActivity() {
-
     private var permissionHelper: PermissionHelper? = null
     private var observer: ViewTreeObserver? = null
+
+    /**
+     * Keyboard show listener
+     * @property isShown true - keyboard now show
+     */
+    open fun onKeyboardChanged(isShown: Boolean) {
+        //override me
+    }
 
     /**
      *  Permission helper
@@ -64,13 +68,5 @@ open class MSActivity : AppCompatActivity() {
         val keypadHeight = screenHeight - rect.bottom
         val keyboardShowed = keypadHeight > screenHeight * 0.15
         onKeyboardChanged(keyboardShowed)
-    }
-
-    /**
-     * Keyboard show listener
-     * @property isShown true - keyboard now show
-     */
-    open fun onKeyboardChanged(isShown: Boolean) {
-        //override me
     }
 }
