@@ -16,7 +16,7 @@ import com.mentalstack.baseproject.utils.nativeData.Regulars
  */
 
 /**
- * replace visible characters ин dots
+ * replace visible characters by dots
  */
 var EditText.asPassword: Boolean
     get() = inputType == InputType.TYPE_TEXT_VARIATION_PASSWORD
@@ -105,16 +105,16 @@ fun EditText.colorize(resId: Int) {
 /**
  * set max length of input characters
  */
-var EditText.maxLength :Int
-set(value) {
-    filters = arrayOf(InputFilter.LengthFilter(value))
-}
-get() {
-    filters?.forEach {
-        (it as? InputFilter.LengthFilter)?.let {
-            return it.max
-        }
+var EditText.maxLength: Int
+    set(value) {
+        filters = arrayOf(InputFilter.LengthFilter(value))
     }
-    return 0
-}
+    get() {
+        filters?.forEach {
+            (it as? InputFilter.LengthFilter)?.let {
+                return it.max
+            }
+        }
+        return 0
+    }
 
